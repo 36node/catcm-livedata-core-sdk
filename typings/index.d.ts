@@ -1,0 +1,214 @@
+export = SDK;
+
+declare class SDK {
+  constructor(opts?: SDK.Options);
+
+  base: string;
+  token: string;
+  auth: string;
+
+  livedata: SDK.LivedataAPI;
+}
+
+declare namespace SDK {
+  export interface Options {
+    base?: string;
+    token?: string;
+  }
+
+  export interface LivedataAPI {
+    /**
+     * List all livedata
+     */
+    listLivedata(req: ListLivedataRequest): Promise<ListLivedataResponse>;
+    /**
+     * Create a livedata
+     */
+    createLivedata(req: CreateLivedataRequest): Promise<CreateLivedataResponse>;
+    /**
+     * Find livedata by id
+     */
+    showLivedataById(req: ShowLivedataByIdRequest): Promise<ShowLivedataByIdResponse>;
+    /**
+     * Update livedata
+     */
+    updateLivedata(req: UpdateLivedataRequest): Promise<UpdateLivedataResponse>;
+    /**
+     *
+     */
+    deleteLivedata(req: DeleteLivedataRequest): Promise<DeleteLivedataResponse>;
+    /**
+     * Create livedata event
+     */
+    createLivedataEvent(req: CreateLivedataEventRequest): Promise<CreateLivedataEventResponse>;
+  }
+
+  type ListLivedataRequest = {
+    query: {
+      limit?: number;
+      offset?: number;
+      sort?: string;
+      select?: string;
+      group?: string | [string];
+
+      filter: {
+        id?: string;
+        type?: string;
+        title: {
+          $regex?: string;
+        };
+        district?: string;
+        owner?: string;
+        publishAt: {
+          $gt?: string;
+          $lt?: string;
+        };
+      };
+    };
+  };
+
+  type ListLivedataResponse = {
+    body: [Livedata];
+    headers: {
+      xTotalCount: number;
+    };
+  };
+
+  type CreateLivedataRequest = {
+    body: LivedataDoc;
+  };
+
+  type CreateLivedataResponse = {
+    body: Livedata;
+  };
+
+  type ShowLivedataByIdRequest = {
+    livedataId: string;
+  };
+
+  type ShowLivedataByIdResponse = {
+    body: Livedata;
+  };
+
+  type UpdateLivedataRequest = {
+    livedataId: string;
+    body: LivedataDoc;
+  };
+
+  type UpdateLivedataResponse = {
+    body: Livedata;
+  };
+
+  type DeleteLivedataRequest = {
+    livedataId: string;
+  };
+
+  type CreateLivedataEventRequest = {
+    livedataId: string;
+    body: LivedataEvent;
+  };
+
+  type CreateLivedataEventResponse = {
+    body: Livedata;
+  };
+
+  type LivedataDoc = {
+    type: string;
+    title: string;
+    district: string;
+    owner: string;
+    publishAt: string;
+    viewCount: number;
+    category: "1" | "2" | "3" | "4" | "5" | "6";
+    indication: string;
+    detail: string;
+    solution: string;
+    method: string;
+    usage: string;
+    contraindication: string;
+    consideration: string;
+    source: string;
+    caseDetail: string;
+    comment: string;
+    remark: string;
+    caseAttach: [string];
+    caseVideo: [string];
+    caseImage: [string];
+    caseRemark: string;
+    phone: string;
+    email: string;
+    address: string;
+    postcode: string;
+    doctorRange: string;
+    idImage: [string];
+    ownerRemark: string;
+    events: [
+      {
+        name: "REVIEW" | "PUBLISH" | "EDIT" | "REFUSE" | "ASSIGN" | "COMMENT";
+        user: string;
+        createdAt: string;
+        experts: [string];
+        remark: string;
+      }
+    ];
+  };
+  type Livedata = {
+    id: string;
+    updatedAt: string;
+    createdAt: string;
+    type: string;
+    title: string;
+    district: string;
+    owner: string;
+    publishAt: string;
+    viewCount: number;
+    category: "1" | "2" | "3" | "4" | "5" | "6";
+    indication: string;
+    detail: string;
+    solution: string;
+    method: string;
+    usage: string;
+    contraindication: string;
+    consideration: string;
+    source: string;
+    caseDetail: string;
+    comment: string;
+    remark: string;
+    caseAttach: [string];
+    caseVideo: [string];
+    caseImage: [string];
+    caseRemark: string;
+    phone: string;
+    email: string;
+    address: string;
+    postcode: string;
+    doctorRange: string;
+    idImage: [string];
+    ownerRemark: string;
+    events: [
+      {
+        name: "REVIEW" | "PUBLISH" | "EDIT" | "REFUSE" | "ASSIGN" | "COMMENT";
+        user: string;
+        createdAt: string;
+        experts: [string];
+        remark: string;
+      }
+    ];
+  };
+  type LivedataEvent = {
+    name: "REVIEW" | "PUBLISH" | "EDIT" | "REFUSE" | "ASSIGN" | "COMMENT";
+    user: string;
+    createdAt: string;
+    experts: [string];
+    remark: string;
+  };
+  type MongoDefault = {
+    id: string;
+    updatedAt: string;
+    createdAt: string;
+  };
+  type Err = {
+    code: string;
+    message: string;
+  };
+}
