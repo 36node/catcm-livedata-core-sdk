@@ -1,9 +1,9 @@
 {
-  "name": "catcm-livedata-core-sdk",
+  "name": "@36node/catcm-livedata-core-sdk",
   "version": "0.0.1",
   "description": "A SDK boilerplate.",
   "repository": {
-    "url": "36node/catcm-livedata-core-sdk",
+    "url": "https://github.com/36node/catcm-livedata-core-sdk",
     "type": "git"
   },
   "license": "MIT",
