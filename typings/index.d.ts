@@ -38,6 +38,10 @@ declare namespace SDK {
      */
     deleteLivedata(req: DeleteLivedataRequest): Promise<DeleteLivedataResponse>;
     /**
+     * List all livedata events
+     */
+    listLivedataEvents(req: ListLivedataEventsRequest): Promise<ListLivedataEventsResponse>;
+    /**
      * Create livedata event
      */
     createLivedataEvent(req: CreateLivedataEventRequest): Promise<CreateLivedataEventResponse>;
@@ -103,13 +107,20 @@ declare namespace SDK {
     livedataId: string;
   };
 
+  type ListLivedataEventsResponse = {
+    body: [LivedataEvent];
+    headers: {
+      xTotalCount: number;
+    };
+  };
+
   type CreateLivedataEventRequest = {
     livedataId: string;
-    body: LivedataEvent;
+    body: LivedataEventDoc;
   };
 
   type CreateLivedataEventResponse = {
-    body: Livedata;
+    body: LivedataEvent;
   };
 
   type LivedataDoc = {
@@ -142,15 +153,9 @@ declare namespace SDK {
     doctorRange: string;
     idImage: [string];
     ownerRemark: string;
-    events: [
-      {
-        name: "REVIEW" | "PUBLISH" | "EDIT" | "REFUSE" | "ASSIGN" | "COMMENT";
-        user: string;
-        createdAt: string;
-        experts: [string];
-        remark: string;
-      }
-    ];
+    state: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
+    events: [undefined];
+    assignees: [string];
   };
   type Livedata = {
     id: string;
@@ -185,22 +190,24 @@ declare namespace SDK {
     doctorRange: string;
     idImage: [string];
     ownerRemark: string;
-    events: [
-      {
-        name: "REVIEW" | "PUBLISH" | "EDIT" | "REFUSE" | "ASSIGN" | "COMMENT";
-        user: string;
-        createdAt: string;
-        experts: [string];
-        remark: string;
-      }
-    ];
+    state: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
+    events: [undefined];
+    assignees: [string];
+  };
+  type LivedataEventDoc = {
+    name: "SUBMIT" | "ASSIGN" | "AUDIT" | "REJECT" | "PUBLISH" | "TURN_BACK";
+    createdBy: string;
+    comment: string;
+    value: string;
   };
   type LivedataEvent = {
-    name: "REVIEW" | "PUBLISH" | "EDIT" | "REFUSE" | "ASSIGN" | "COMMENT";
-    user: string;
+    id: string;
+    updatedAt: string;
     createdAt: string;
-    experts: [string];
-    remark: string;
+    name: "SUBMIT" | "ASSIGN" | "AUDIT" | "REJECT" | "PUBLISH" | "TURN_BACK";
+    createdBy: string;
+    comment: string;
+    value: string;
   };
   type MongoDefault = {
     id: string;

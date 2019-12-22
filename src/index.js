@@ -122,6 +122,23 @@ export default class SDK {
       });
     },
     /**
+     * List all livedata events
+     *
+     * @param {ListLivedataEventsRequest} req listLivedataEvents request
+     * @returns {Promise<ListLivedataEventsResponse>} A paged array of livedata events
+     */
+    listLivedataEvents: (req = {}) => {
+      const { livedataId, headers } = req;
+
+      if (!livedataId)
+        throw new Error("livedataId is required for listLivedataEvents");
+
+      return fetch(`${this.base}/livedata/${livedataId}/events`, {
+        method: "GET",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
      * Create livedata event
      *
      * @param {CreateLivedataEventRequest} req createLivedataEvent request
