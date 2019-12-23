@@ -67,6 +67,7 @@ declare namespace SDK {
           $gt?: string;
           $lt?: string;
         };
+        assignees?: string;
         state?: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
       };
     };
