@@ -67,6 +67,7 @@ declare namespace SDK {
           $gt?: string;
           $lt?: string;
         };
+        state?: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
       };
     };
   };
@@ -104,6 +105,10 @@ declare namespace SDK {
   };
 
   type DeleteLivedataRequest = {
+    livedataId: string;
+  };
+
+  type ListLivedataEventsRequest = {
     livedataId: string;
   };
 
