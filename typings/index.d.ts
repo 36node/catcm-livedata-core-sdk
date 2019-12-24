@@ -63,7 +63,11 @@ declare namespace SDK {
         };
         district?: string;
         owner?: string;
-        publishAt: {
+        publishedAt: {
+          $gt?: string;
+          $lt?: string;
+        };
+        submittedAt: {
           $gt?: string;
           $lt?: string;
         };
@@ -134,7 +138,6 @@ declare namespace SDK {
     title: string;
     district: string;
     owner: string;
-    publishAt: string;
     viewCount: number;
     category: "1" | "2" | "3" | "4" | "5" | "6";
     indication: string;
@@ -162,6 +165,12 @@ declare namespace SDK {
     state: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
     events: [undefined];
     assignees: [string];
+    submittedAt: string;
+    assignedAt: string;
+    auditedAt: string;
+    rejectedAt: string;
+    publishedAt: string;
+    returnedAt: string;
   };
   type Livedata = {
     id: string;
@@ -171,7 +180,6 @@ declare namespace SDK {
     title: string;
     district: string;
     owner: string;
-    publishAt: string;
     viewCount: number;
     category: "1" | "2" | "3" | "4" | "5" | "6";
     indication: string;
@@ -199,6 +207,12 @@ declare namespace SDK {
     state: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
     events: [undefined];
     assignees: [string];
+    submittedAt: string;
+    assignedAt: string;
+    auditedAt: string;
+    rejectedAt: string;
+    publishedAt: string;
+    returnedAt: string;
   };
   type LivedataEventDoc = {
     name: "SUBMIT" | "ASSIGN" | "AUDIT" | "REJECT" | "PUBLISH" | "TURN_BACK";
