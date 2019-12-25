@@ -73,6 +73,7 @@ declare namespace SDK {
         };
         assignees?: string;
         state?: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
+        createdBy?: string;
       };
     };
   };
@@ -171,6 +172,8 @@ declare namespace SDK {
     rejectedAt: string;
     publishedAt: string;
     returnedAt: string;
+    createdBy: string;
+    updatedBy: string;
   };
   type Livedata = {
     id: string;
@@ -213,6 +216,8 @@ declare namespace SDK {
     rejectedAt: string;
     publishedAt: string;
     returnedAt: string;
+    createdBy: string;
+    updatedBy: string;
   };
   type LivedataEventDoc = {
     name: "SUBMIT" | "ASSIGN" | "AUDIT" | "REJECT" | "PUBLISH" | "TURN_BACK";
