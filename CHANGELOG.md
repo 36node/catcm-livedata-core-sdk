@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/36node/catcm-livedata-core-sdk/compare/v0.0.6...v0.0.7) (2019-12-25)
+
+
+### Bug Fixes
+
+* livedata list by createdBy ([db49c9d](https://github.com/36node/catcm-livedata-core-sdk/commit/db49c9d))
+
+
+
 ### [0.0.6](https://github.com/36node/catcm-livedata-core-sdk/compare/v0.0.5...v0.0.6) (2019-12-24)
 
 
