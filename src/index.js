@@ -159,4 +159,26 @@ export default class SDK {
       });
     },
   };
+  /**
+   * summary's methods
+   */
+  summary = {
+    /**
+     * Get livedata summary
+     *
+     * @param {GetLivedataSummaryRequest} req getLivedataSummary request
+     * @returns {Promise<GetLivedataSummaryResponse>} A paged array of livedata summaries
+     */
+    getLivedataSummary: (req = {}) => {
+      const { query, headers } = req;
+
+      if (!query) throw new Error("query is required for summary");
+
+      return fetch(`${this.base}/summary/livedata`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
 }

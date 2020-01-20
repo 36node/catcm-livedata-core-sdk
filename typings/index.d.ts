@@ -8,6 +8,7 @@ declare class SDK {
   auth: string;
 
   livedata: SDK.LivedataAPI;
+  summary: SDK.SummaryAPI;
 }
 
 declare namespace SDK {
@@ -46,6 +47,12 @@ declare namespace SDK {
      */
     createLivedataEvent(req: CreateLivedataEventRequest): Promise<CreateLivedataEventResponse>;
   }
+  export interface SummaryAPI {
+    /**
+     * Get livedata summary
+     */
+    getLivedataSummary(req: GetLivedataSummaryRequest): Promise<GetLivedataSummaryResponse>;
+  }
 
   type ListLivedataRequest = {
     query: {
@@ -56,13 +63,21 @@ declare namespace SDK {
       group?: string | [string];
 
       filter: {
-        id?: string;
-        type?: string;
+        no: {
+          $regex?: string;
+        };
+        type: {
+          $regex?: string;
+        };
         title: {
           $regex?: string;
         };
-        district?: string;
-        owner?: string;
+        district: {
+          $regex?: string;
+        };
+        owner: {
+          $regex?: string;
+        };
         publishedAt: {
           $gt?: string;
           $lt?: string;
@@ -134,13 +149,53 @@ declare namespace SDK {
     body: LivedataEvent;
   };
 
+  type GetLivedataSummaryRequest = {
+    query: {
+      group: [string];
+
+      filter: {
+        no: {
+          $regex?: string;
+        };
+        type: {
+          $regex?: string;
+        };
+        title: {
+          $regex?: string;
+        };
+        district: {
+          $regex?: string;
+        };
+        owner: {
+          $regex?: string;
+        };
+        publishedAt: {
+          $gt?: string;
+          $lt?: string;
+        };
+        submittedAt: {
+          $gt?: string;
+          $lt?: string;
+        };
+        assignees?: string;
+        state?: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
+      };
+    };
+  };
+
+  type GetLivedataSummaryResponse = {
+    body: [LivedataSummary];
+  };
+
   type LivedataDoc = {
+    no: string;
     type: string;
     title: string;
     district: string;
     owner: string;
     viewCount: number;
     category: "1" | "2" | "3" | "4" | "5" | "6";
+    name: string;
     indication: string;
     detail: string;
     solution: string;
@@ -156,12 +211,59 @@ declare namespace SDK {
     caseVideo: [string];
     caseImage: [string];
     caseRemark: string;
+    birthday: string;
     phone: string;
+    birthplace: string;
+    position: string;
+    doctorYear: string;
+    doctorAttach: [undefined];
+    job: string;
+    jobAttach: [string];
+    degree: string;
+    degreeAttach: [string];
     email: string;
     address: string;
     postcode: string;
-    doctorRange: string;
+    idNumber: string;
     idImage: [string];
+    award: string;
+    awardAttach: [string];
+    medicine: string;
+    medicineAttach: [string];
+    brand: string;
+    brandAttach: [string];
+    patent: string;
+    patentAttach: [string];
+    book: string;
+    bookAttach: [string];
+    paper: string;
+    paperAttach: [string];
+    product: string;
+    productAttach: [string];
+    appliance: string;
+    applianceAttach: [string];
+    sample: string;
+    sampleAttach: [string];
+    project: string;
+    projectAttach: [string];
+    company: string;
+    companyAttach: [string];
+    heritage: string;
+    heritageAttach: [string];
+    inherite: string;
+    inheriteAttach: [string];
+    homeaddress: string;
+    homeaddressAttach: [string];
+    companyaddress: string;
+    companyaddressAttach: [string];
+    expertComment: string;
+    expertCommentAttach: [string];
+    honesty: string;
+    honestyAttach: [string];
+    techCertificate: string;
+    techCertificateAttach: [string];
+    owerCertificate: string;
+    owerCertificateAttach: [string];
     ownerRemark: string;
     state: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
     events: [undefined];
@@ -179,12 +281,14 @@ declare namespace SDK {
     id: string;
     updatedAt: string;
     createdAt: string;
+    no: string;
     type: string;
     title: string;
     district: string;
     owner: string;
     viewCount: number;
     category: "1" | "2" | "3" | "4" | "5" | "6";
+    name: string;
     indication: string;
     detail: string;
     solution: string;
@@ -200,12 +304,59 @@ declare namespace SDK {
     caseVideo: [string];
     caseImage: [string];
     caseRemark: string;
+    birthday: string;
     phone: string;
+    birthplace: string;
+    position: string;
+    doctorYear: string;
+    doctorAttach: [undefined];
+    job: string;
+    jobAttach: [string];
+    degree: string;
+    degreeAttach: [string];
     email: string;
     address: string;
     postcode: string;
-    doctorRange: string;
+    idNumber: string;
     idImage: [string];
+    award: string;
+    awardAttach: [string];
+    medicine: string;
+    medicineAttach: [string];
+    brand: string;
+    brandAttach: [string];
+    patent: string;
+    patentAttach: [string];
+    book: string;
+    bookAttach: [string];
+    paper: string;
+    paperAttach: [string];
+    product: string;
+    productAttach: [string];
+    appliance: string;
+    applianceAttach: [string];
+    sample: string;
+    sampleAttach: [string];
+    project: string;
+    projectAttach: [string];
+    company: string;
+    companyAttach: [string];
+    heritage: string;
+    heritageAttach: [string];
+    inherite: string;
+    inheriteAttach: [string];
+    homeaddress: string;
+    homeaddressAttach: [string];
+    companyaddress: string;
+    companyaddressAttach: [string];
+    expertComment: string;
+    expertCommentAttach: [string];
+    honesty: string;
+    honestyAttach: [string];
+    techCertificate: string;
+    techCertificateAttach: [string];
+    owerCertificate: string;
+    owerCertificateAttach: [string];
     ownerRemark: string;
     state: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
     events: [undefined];
@@ -234,6 +385,7 @@ declare namespace SDK {
     comment: string;
     value: string;
   };
+  type LivedataSummary = {};
   type MongoDefault = {
     id: string;
     updatedAt: string;
