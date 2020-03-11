@@ -181,4 +181,125 @@ export default class SDK {
       });
     },
   };
+  /**
+   * extra's methods
+   */
+  extra = {
+    /**
+     * List all extra
+     *
+     * @param {ListExtraRequest} req listExtra request
+     * @returns {Promise<ListExtraResponse>} A paged array of extra
+     */
+    listExtra: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/extra`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Create a Extra
+     *
+     * @param {CreateExtraRequest} req createExtra request
+     * @returns {Promise<CreateExtraResponse>} The Extra created
+     */
+    createExtra: (req = {}) => {
+      const { headers, body } = req;
+
+      if (!body) throw new Error("requetBody is required for createExtra");
+
+      return fetch(`${this.base}/extra`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Find Extra by id
+     *
+     * @param {ShowExtraByIdRequest} req showExtraById request
+     * @returns {Promise<ShowExtraByIdResponse>} Expected response to a valid request
+     */
+    showExtraById: (req = {}) => {
+      const { extraId, headers } = req;
+
+      if (!extraId) throw new Error("extraId is required for showExtraById");
+
+      return fetch(`${this.base}/extra/${extraId}`, {
+        method: "GET",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Update Extra
+     *
+     * @param {UpdateExtraRequest} req updateExtra request
+     * @returns {Promise<UpdateExtraResponse>} The Extra
+     */
+    updateExtra: (req = {}) => {
+      const { extraId, headers, body } = req;
+
+      if (!extraId) throw new Error("extraId is required for updateExtra");
+      if (!body) throw new Error("requetBody is required for updateExtra");
+
+      return fetch(`${this.base}/extra/${extraId}`, {
+        method: "PATCH",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     *
+     *
+     * @param {DeleteExtraRequest} req deleteExtra request
+     * @returns {Promise<DeleteExtraResponse>} Extra deleted
+     */
+    deleteExtra: (req = {}) => {
+      const { extraId, headers } = req;
+
+      if (!extraId) throw new Error("extraId is required for deleteExtra");
+
+      return fetch(`${this.base}/extra/${extraId}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * List all Extra events
+     *
+     * @param {ListExtraEventsRequest} req listExtraEvents request
+     * @returns {Promise<ListExtraEventsResponse>} A paged array of Extra events
+     */
+    listExtraEvents: (req = {}) => {
+      const { extraId, headers } = req;
+
+      if (!extraId) throw new Error("extraId is required for listExtraEvents");
+
+      return fetch(`${this.base}/extra/${extraId}/events`, {
+        method: "GET",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Create Extra event
+     *
+     * @param {CreateExtraEventRequest} req createExtraEvent request
+     * @returns {Promise<CreateExtraEventResponse>} Expected response to a valid request
+     */
+    createExtraEvent: (req = {}) => {
+      const { extraId, headers, body } = req;
+
+      if (!extraId) throw new Error("extraId is required for createExtraEvent");
+      if (!body) throw new Error("requetBody is required for createExtraEvent");
+
+      return fetch(`${this.base}/extra/${extraId}/events`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
 }

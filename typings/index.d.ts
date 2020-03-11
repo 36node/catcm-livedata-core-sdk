@@ -9,6 +9,7 @@ declare class SDK {
 
   livedata: SDK.LivedataAPI;
   summary: SDK.SummaryAPI;
+  extra: SDK.ExtraAPI;
 }
 
 declare namespace SDK {
@@ -53,6 +54,36 @@ declare namespace SDK {
      */
     getLivedataSummary(req: GetLivedataSummaryRequest): Promise<GetLivedataSummaryResponse>;
   }
+  export interface ExtraAPI {
+    /**
+     * List all extra
+     */
+    listExtra(req: ListExtraRequest): Promise<ListExtraResponse>;
+    /**
+     * Create a Extra
+     */
+    createExtra(req: CreateExtraRequest): Promise<CreateExtraResponse>;
+    /**
+     * Find Extra by id
+     */
+    showExtraById(req: ShowExtraByIdRequest): Promise<ShowExtraByIdResponse>;
+    /**
+     * Update Extra
+     */
+    updateExtra(req: UpdateExtraRequest): Promise<UpdateExtraResponse>;
+    /**
+     *
+     */
+    deleteExtra(req: DeleteExtraRequest): Promise<DeleteExtraResponse>;
+    /**
+     * List all Extra events
+     */
+    listExtraEvents(req: ListExtraEventsRequest): Promise<ListExtraEventsResponse>;
+    /**
+     * Create Extra event
+     */
+    createExtraEvent(req: CreateExtraEventRequest): Promise<CreateExtraEventResponse>;
+  }
 
   type ListLivedataRequest = {
     query: {
@@ -87,7 +118,16 @@ declare namespace SDK {
           $lt?: string;
         };
         assignees?: string;
-        state?: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
+        state?:
+          | "DRAFT"
+          | "INIT"
+          | "PROVINCE_EXPERT_AUDITED"
+          | "REVIEW_APPROVED"
+          | "REVIEW_REJECTED"
+          | "NATIONAL_EXPERT_AUDITED"
+          | "APPROVED"
+          | "REJECTED"
+          | "RETURNED";
         createdBy?: string;
       };
     };
@@ -177,8 +217,16 @@ declare namespace SDK {
           $gt?: string;
           $lt?: string;
         };
-        assignees?: string;
-        state?: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
+        state?:
+          | "DRAFT"
+          | "INIT"
+          | "PROVINCE_EXPERT_AUDITED"
+          | "REVIEW_APPROVED"
+          | "REVIEW_REJECTED"
+          | "NATIONAL_EXPERT_AUDITED"
+          | "APPROVED"
+          | "REJECTED"
+          | "RETURNED";
       };
     };
   };
@@ -187,8 +235,104 @@ declare namespace SDK {
     body: [LivedataSummary];
   };
 
+  type ListExtraRequest = {
+    query: {
+      limit?: number;
+      offset?: number;
+      sort?: string;
+      select?: string;
+      group?: string | [string];
+
+      filter: {
+        no: {
+          $regex?: string;
+        };
+        type: {
+          $regex?: string;
+        };
+        title: {
+          $regex?: string;
+        };
+        district: {
+          $regex?: string;
+        };
+        owner: {
+          $regex?: string;
+        };
+        state?:
+          | "DRAFT"
+          | "INIT"
+          | "PROVINCE_EXPERT_AUDITED"
+          | "REVIEW_APPROVED"
+          | "REVIEW_REJECTED"
+          | "NATIONAL_EXPERT_AUDITED"
+          | "APPROVED"
+          | "REJECTED"
+          | "RETURNED";
+        createdBy?: string;
+      };
+    };
+  };
+
+  type ListExtraResponse = {
+    body: [Livedata];
+    headers: {
+      xTotalCount: number;
+    };
+  };
+
+  type CreateExtraRequest = {
+    body: LivedataDoc;
+  };
+
+  type CreateExtraResponse = {
+    body: Livedata;
+  };
+
+  type ShowExtraByIdRequest = {
+    extraId: string;
+  };
+
+  type ShowExtraByIdResponse = {
+    body: Livedata;
+  };
+
+  type UpdateExtraRequest = {
+    extraId: string;
+    body: LivedataDoc;
+  };
+
+  type UpdateExtraResponse = {
+    body: Livedata;
+  };
+
+  type DeleteExtraRequest = {
+    extraId: string;
+  };
+
+  type ListExtraEventsRequest = {
+    extraId: string;
+  };
+
+  type ListExtraEventsResponse = {
+    body: [LivedataEvent];
+    headers: {
+      xTotalCount: number;
+    };
+  };
+
+  type CreateExtraEventRequest = {
+    extraId: string;
+    body: LivedataEventDoc;
+  };
+
+  type CreateExtraEventResponse = {
+    body: LivedataEvent;
+  };
+
   type LivedataDoc = {
     no: string;
+    livedata: string;
     type: string;
     title: string;
     district: string;
@@ -265,9 +409,17 @@ declare namespace SDK {
     owerCertificate: string;
     owerCertificateAttach: [string];
     ownerRemark: string;
-    state: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
+    state:
+      | "DRAFT"
+      | "INIT"
+      | "PROVINCE_EXPERT_AUDITED"
+      | "REVIEW_APPROVED"
+      | "REVIEW_REJECTED"
+      | "NATIONAL_EXPERT_AUDITED"
+      | "APPROVED"
+      | "REJECTED"
+      | "RETURNED";
     events: [undefined];
-    assignees: [string];
     submittedAt: string;
     assignedAt: string;
     auditedAt: string;
@@ -282,6 +434,7 @@ declare namespace SDK {
     updatedAt: string;
     createdAt: string;
     no: string;
+    livedata: string;
     type: string;
     title: string;
     district: string;
@@ -358,9 +511,17 @@ declare namespace SDK {
     owerCertificate: string;
     owerCertificateAttach: [string];
     ownerRemark: string;
-    state: "DRAFT" | "INIT" | "REVIEWING" | "PUBLISHED" | "REJECTED" | "RETURNED";
+    state:
+      | "DRAFT"
+      | "INIT"
+      | "PROVINCE_EXPERT_AUDITED"
+      | "REVIEW_APPROVED"
+      | "REVIEW_REJECTED"
+      | "NATIONAL_EXPERT_AUDITED"
+      | "APPROVED"
+      | "REJECTED"
+      | "RETURNED";
     events: [undefined];
-    assignees: [string];
     submittedAt: string;
     assignedAt: string;
     auditedAt: string;
@@ -371,7 +532,18 @@ declare namespace SDK {
     updatedBy: string;
   };
   type LivedataEventDoc = {
-    name: "SUBMIT" | "ASSIGN" | "AUDIT" | "REJECT" | "PUBLISH" | "TURN_BACK";
+    name:
+      | "SUBMIT"
+      | "TURN_BACK"
+      | "PROVINCE_EXPERT_AUDIT"
+      | "PROVINCE_APPROVE"
+      | "PROVINCE_REJECT"
+      | "NATIONAL_EXPERT_AUDIT"
+      | "APPROVE"
+      | "REJECT"
+      | "PUBLISH"
+      | "UNPUBLISH"
+      | "CERTIFICATE";
     createdBy: string;
     comment: string;
     value: string;
@@ -380,7 +552,18 @@ declare namespace SDK {
     id: string;
     updatedAt: string;
     createdAt: string;
-    name: "SUBMIT" | "ASSIGN" | "AUDIT" | "REJECT" | "PUBLISH" | "TURN_BACK";
+    name:
+      | "SUBMIT"
+      | "TURN_BACK"
+      | "PROVINCE_EXPERT_AUDIT"
+      | "PROVINCE_APPROVE"
+      | "PROVINCE_REJECT"
+      | "NATIONAL_EXPERT_AUDIT"
+      | "APPROVE"
+      | "REJECT"
+      | "PUBLISH"
+      | "UNPUBLISH"
+      | "CERTIFICATE";
     createdBy: string;
     comment: string;
     value: string;
