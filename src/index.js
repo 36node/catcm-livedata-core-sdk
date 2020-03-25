@@ -170,13 +170,24 @@ export default class SDK {
      * @returns {Promise<GetLivedataSummaryResponse>} A paged array of livedata summaries
      */
     getLivedataSummary: (req = {}) => {
-      const { query, headers } = req;
-
-      if (!query) throw new Error("query is required for summary");
+      const { headers } = req;
 
       return fetch(`${this.base}/summary/livedata`, {
         method: "GET",
-        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Get extra summary
+     *
+     * @param {GetExtraSummaryRequest} req getExtraSummary request
+     * @returns {Promise<GetExtraSummaryResponse>} A paged array of livedata summaries
+     */
+    getExtraSummary: (req = {}) => {
+      const { headers } = req;
+
+      return fetch(`${this.base}/summary/extra`, {
+        method: "GET",
         headers: { Authorization: this.auth, ...headers },
       });
     },

@@ -53,6 +53,10 @@ declare namespace SDK {
      * Get livedata summary
      */
     getLivedataSummary(req: GetLivedataSummaryRequest): Promise<GetLivedataSummaryResponse>;
+    /**
+     * Get extra summary
+     */
+    getExtraSummary(req: GetExtraSummaryRequest): Promise<GetExtraSummaryResponse>;
   }
   export interface ExtraAPI {
     /**
@@ -189,49 +193,11 @@ declare namespace SDK {
     body: LivedataEvent;
   };
 
-  type GetLivedataSummaryRequest = {
-    query: {
-      group: [string];
-
-      filter: {
-        no: {
-          $regex?: string;
-        };
-        type: {
-          $regex?: string;
-        };
-        title: {
-          $regex?: string;
-        };
-        district: {
-          $regex?: string;
-        };
-        owner: {
-          $regex?: string;
-        };
-        publishedAt: {
-          $gt?: string;
-          $lt?: string;
-        };
-        submittedAt: {
-          $gt?: string;
-          $lt?: string;
-        };
-        state?:
-          | "DRAFT"
-          | "INIT"
-          | "PROVINCE_EXPERT_AUDITED"
-          | "REVIEW_APPROVED"
-          | "REVIEW_REJECTED"
-          | "NATIONAL_EXPERT_AUDITED"
-          | "APPROVED"
-          | "REJECTED"
-          | "RETURNED";
-      };
-    };
+  type GetLivedataSummaryResponse = {
+    body: [LivedataSummary];
   };
 
-  type GetLivedataSummaryResponse = {
+  type GetExtraSummaryResponse = {
     body: [LivedataSummary];
   };
 
