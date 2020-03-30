@@ -113,6 +113,9 @@ declare namespace SDK {
         owner: {
           $regex?: string;
         };
+        certificate: {
+          $regex?: string;
+        };
         publishedAt: {
           $gt?: string;
           $lt?: string;
@@ -133,6 +136,7 @@ declare namespace SDK {
           | "REJECTED"
           | "RETURNED";
         createdBy?: string;
+        q?: string;
       };
     };
   };
