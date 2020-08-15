@@ -313,4 +313,41 @@ export default class SDK {
       });
     },
   };
+  /**
+   * feedback's methods
+   */
+  feedback = {
+    /**
+     * List all feedback
+     *
+     * @param {ListFeedbackRequest} req listFeedback request
+     * @returns {Promise<ListFeedbackResponse>} A paged array of feedback
+     */
+    listFeedback: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/feedback`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Create a feedback
+     *
+     * @param {CreateFeedbackRequest} req createFeedback request
+     * @returns {Promise<CreateFeedbackResponse>} The feedback created
+     */
+    createFeedback: (req = {}) => {
+      const { headers, body } = req;
+
+      if (!body) throw new Error("requetBody is required for createFeedback");
+
+      return fetch(`${this.base}/feedback`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
 }

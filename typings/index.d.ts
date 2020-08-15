@@ -10,6 +10,7 @@ declare class SDK {
   livedata: SDK.LivedataAPI;
   summary: SDK.SummaryAPI;
   extra: SDK.ExtraAPI;
+  feedback: SDK.FeedbackAPI;
 }
 
 declare namespace SDK {
@@ -87,6 +88,16 @@ declare namespace SDK {
      * Create Extra event
      */
     createExtraEvent(req: CreateExtraEventRequest): Promise<CreateExtraEventResponse>;
+  }
+  export interface FeedbackAPI {
+    /**
+     * List all feedback
+     */
+    listFeedback(req: ListFeedbackRequest): Promise<ListFeedbackResponse>;
+    /**
+     * Create a feedback
+     */
+    createFeedback(req: CreateFeedbackRequest): Promise<CreateFeedbackResponse>;
   }
 
   type ListLivedataRequest = {
@@ -300,6 +311,30 @@ declare namespace SDK {
     body: LivedataEvent;
   };
 
+  type ListFeedbackRequest = {
+    query: {
+      limit?: number;
+      offset?: number;
+      sort?: string;
+      select?: string;
+    };
+  };
+
+  type ListFeedbackResponse = {
+    body: [Feedback];
+    headers: {
+      xTotalCount: number;
+    };
+  };
+
+  type CreateFeedbackRequest = {
+    body: Feedback;
+  };
+
+  type CreateFeedbackResponse = {
+    body: Feedback;
+  };
+
   type LivedataDoc = {
     no: string;
     livedata: string;
@@ -315,7 +350,21 @@ declare namespace SDK {
     solution: string;
     method: string;
     usage: string;
+    area: string;
+    applyAt: string;
+    applyAttach: [string];
+    certiAttach: [string];
+    otherAttach: [string];
+    feature: string;
+    inheritTime: string;
+    inheritGeneration: string;
+    inheritSeries: string;
+    inheritAttach: [string];
+    applyRule: string;
+    applyRuleAttach: [string];
     contraindication: string;
+    desc: string;
+    pureContent: string;
     consideration: string;
     source: string;
     caseDetail: string;
@@ -327,12 +376,17 @@ declare namespace SDK {
     caseRemark: string;
     birthday: string;
     phone: string;
+    sex: string;
+    nation: string;
     birthplace: string;
     position: string;
     doctorYear: string;
     doctorAttach: [undefined];
     job: string;
+    coowner: string;
     jobAttach: [string];
+    otherUserAttach: [string];
+    positionAttach: [string];
     degree: string;
     degreeAttach: [string];
     email: string;
@@ -378,7 +432,22 @@ declare namespace SDK {
     techCertificateAttach: [string];
     owerCertificate: string;
     owerCertificateAttach: [string];
+    hostUser: string;
+    hostTime: string;
+    hostAttach: [string];
     ownerRemark: string;
+    companyUser: string;
+    companyUserPhone: string;
+    companyName: string;
+    companyPhone: string;
+    companyDate: string;
+    pexpertComment: string;
+    pexpertCommentAttach: [string];
+    pexpertCommentHonestyAttach: [string];
+    nexpertComment: string;
+    nexpertCommentAttach: [string];
+    nexpertCommentHonestyAttach: [string];
+    idPersonImage: [string];
     state:
       | "DRAFT"
       | "INIT"
@@ -417,7 +486,21 @@ declare namespace SDK {
     solution: string;
     method: string;
     usage: string;
+    area: string;
+    applyAt: string;
+    applyAttach: [string];
+    certiAttach: [string];
+    otherAttach: [string];
+    feature: string;
+    inheritTime: string;
+    inheritGeneration: string;
+    inheritSeries: string;
+    inheritAttach: [string];
+    applyRule: string;
+    applyRuleAttach: [string];
     contraindication: string;
+    desc: string;
+    pureContent: string;
     consideration: string;
     source: string;
     caseDetail: string;
@@ -429,12 +512,17 @@ declare namespace SDK {
     caseRemark: string;
     birthday: string;
     phone: string;
+    sex: string;
+    nation: string;
     birthplace: string;
     position: string;
     doctorYear: string;
     doctorAttach: [undefined];
     job: string;
+    coowner: string;
     jobAttach: [string];
+    otherUserAttach: [string];
+    positionAttach: [string];
     degree: string;
     degreeAttach: [string];
     email: string;
@@ -480,7 +568,22 @@ declare namespace SDK {
     techCertificateAttach: [string];
     owerCertificate: string;
     owerCertificateAttach: [string];
+    hostUser: string;
+    hostTime: string;
+    hostAttach: [string];
     ownerRemark: string;
+    companyUser: string;
+    companyUserPhone: string;
+    companyName: string;
+    companyPhone: string;
+    companyDate: string;
+    pexpertComment: string;
+    pexpertCommentAttach: [string];
+    pexpertCommentHonestyAttach: [string];
+    nexpertComment: string;
+    nexpertCommentAttach: [string];
+    nexpertCommentHonestyAttach: [string];
+    idPersonImage: [string];
     state:
       | "DRAFT"
       | "INIT"
@@ -539,6 +642,9 @@ declare namespace SDK {
     value: string;
   };
   type LivedataSummary = {};
+  type Feedback = {
+    text: string;
+  };
   type MongoDefault = {
     id: string;
     updatedAt: string;
